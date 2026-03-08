@@ -170,3 +170,32 @@ document.addEventListener("click", (e) => {
     alert("Add your social or contact link here");
   }
 });
+
+
+const string = document.querySelector("#string");
+const stringPath = document.querySelector("#string path");
+
+if (string && stringPath) {
+  let finalPath = "M 10 110 Q 500 110 990 110";
+
+  string.addEventListener("mousemove", function (e) {
+    const rect = string.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 1000;
+    const y = ((e.clientY - rect.top) / rect.height) * 220;
+    const path = `M 10 110 Q ${x} ${y} 990 110`;
+
+    gsap.to(stringPath, {
+      attr: { d: path },
+      duration: 0.2,
+      ease: "power3.out",
+    });
+  });
+
+  string.addEventListener("mouseleave", function () {
+    gsap.to(stringPath, {
+      attr: { d: finalPath },
+      duration: 1.5,
+      ease: "elastic.out(1, 0.2)",
+    });
+  });
+}
